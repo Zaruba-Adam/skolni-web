@@ -231,11 +231,18 @@
     </footer>
 
     <script>
-        // HESLO PRO ADMINA (změň si podle sebe)
-        const ADMIN_PASSWORD = "heslo";
-        let isUserAdmin = false; // Proměnná, která si pamatuje, jestli už uživatel zadal heslo
+        // ==========================================
+        // 1. ZDE DOPLŇ SVÉ ÚDAJE Z GITHUBU:
+        // ==========================================
+        const GITHUB_USERNAME = "zaruba-adam"; // např. "adamzaruba"
+        const GITHUB_REPO = "skolni-web";           // např. "skolni-noviny"
+        const ARTICLES_FILE = "clanky.json";              // Název souboru, kam se budou články ukládat
 
-        // Výchozích 12 článků
+        // HESLO PRO ADMINA (pro otevření editoru)
+        const ADMIN_PASSWORD = "heslo";
+        let isUserAdmin = false;
+
+        // Výchozích 12 článků (použijí se, dokud na GitHubu ještě není clanky.json)
         const defaultArticles = [
             {
                 id: 1,
@@ -245,7 +252,7 @@
                 date: "07. 10. 2026",
                 image: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=600&q=80",
                 summary: "Naše škola získala špičkové vybavení pro výuku chemie a fyziky. Podívejte se, co všechno se změnilo.",
-                content: "Dnešním dnem byly v hlavní budově školy oficiálně otevřeny dvě nové moderní vědecké laboratoře. Díky podpoře z evropských fondů získala škola špičkové mikroskopy, digitální měřicí přístroje a plně vybavené pracovní stanice pro pokusy.\n\nŘeditel školy při přestřižení pásky uvedl, že věří v prohloubení zájmu studentů o přírodní vědy. Laboratoře budou přístupné všem ročníkům od příštího týdne."
+                content: "Dnešním dnem byly v hlavní budově školy oficiálně otevřeny dvě nové moderní vědecké laboratoře. Díky podpoře z evropských fondů získala škola špičkové mikroskopy, \n digitální měřicí přístroje a plně vybavené pracovní stanice pro pokusy. Ředitel školy při přestřižení pásky uvedl, že věří v prohloubení zájmu studentů o přírodní vědy. Laboratoře budou přístupné všem ročníkům od příštího týdne."
             },
             {
                 id: 2,
@@ -354,18 +361,33 @@
                 author: "Veronika Šimková",
                 date: "26. 09. 2026",
                 image: "https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=600&q=80",
-                summary: "Můžete přispět krmivem, deakmi nebo hračkami pro pejsky a kočičky bez domova.",
+                summary: "Můžete přispět krmivem, dekami nebo hračkami pro pejsky a kočičky bez domova.",
                 content: "Sbírka pro městský zvířecí útulek finišuje. Sběrné místo je u vrátnice školy každé ráno. Děkujeme všem, kteří dosud přispěli granulemi, pamlsky či teplými dekami pro zvířata na zimu."
             }
         ];
 
-        // Načtení článků z localStorage nebo nastavení výchozích
-        let articles = JSON.parse(localStorage.getItem('breaking_news_articles')) || defaultArticles;
+        let articles = [...defaultArticles];
 
-        // Nastavení dnešního data
+        // Nastavení dnešního data v hlavičce
         document.getElementById('current-date').innerText = new Date().toLocaleDateString('cs-CZ', {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
         });
+
+        // ==========================================
+        // 2. NAČTENÍ ČLÁNKŮ ZE SOUBORU clanky.json
+        // ==========================================
+        async function loadArticlesFromServer() {
+            try {
+                // Načteme clanky.json s časovou značkou proti kešování
+                const res = await fetch(`./${ARTICLES_FILE}?t=${Date.now()}`);
+                if (res.ok) {
+                    articles = await res.json();
+                }
+            } catch (err) {
+                console.log("Soubor clanky.json zatím neexistuje nebo běžíš lokálně, používám výchozí články.");
+            }
+            renderArticles();
+        }
 
         // Kontrola hesla před úpravou
         function checkAuthAndEdit(id) {
@@ -414,9 +436,8 @@
                         </div>
                         <div class="pt-3 border-t border-gray-100 flex items-center justify-between mt-auto">
                             <button onclick="openViewModal(${article.id})" class="text-brand-red hover:text-brand-reddark text-xs font-bold uppercase tracking-wider flex items-center gap-1">
-                                Číst dále <i class="fas fa-arrow-right text-[10px]"></i>
+                                Read more <i class="fas fa-arrow-right text-[10px]"></i>
                             </button>
-                            <!-- Změněno volání na checkAuthAndEdit -->
                             <button onclick="checkAuthAndEdit(${article.id})" class="text-gray-400 hover:text-brand-navy text-xs font-semibold px-2 py-1 bg-gray-50 hover:bg-gray-100 rounded border border-gray-200 transition" title="Upravit článek">
                                 <i class="fas fa-edit"></i> Upravit
                             </button>
@@ -440,7 +461,6 @@
             document.getElementById('modal-summary').innerText = article.summary;
             document.getElementById('modal-content').innerText = article.content;
 
-            // Změněno na volání s heslem
             document.getElementById('modal-edit-btn').onclick = function() {
                 closeModal('view-modal');
                 checkAuthAndEdit(id);
@@ -462,8 +482,7 @@
             document.getElementById('edit-summary').value = article.summary;
             document.getElementById('edit-content').value = article.content;
 
-            // Nastavení aktuálního obrázku
-            document.getElementById('edit-image-file').value = ''; // vyresetování file inputu
+            document.getElementById('edit-image-file').value = '';
             document.getElementById('edit-image-base64').value = article.image;
             
             const preview = document.getElementById('edit-image-preview');
@@ -474,56 +493,135 @@
             document.body.style.overflow = 'hidden';
         }
 
-        // Zpracování nahrání obrázku - Převede obrázek na Base64
+        // Zpracování a automatické zmenšení obrázku (aby prošel přes GitHub API)
         document.getElementById('edit-image-file').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    const base64String = e.target.result;
-                    // Uložíme si vygenerovaný kód do skrytého pole
-                    document.getElementById('edit-image-base64').value = base64String;
-                    // Zobrazíme náhled
-                    const preview = document.getElementById('edit-image-preview');
-                    preview.src = base64String;
-                    preview.classList.remove('hidden');
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const MAX_WIDTH = 800; // Zmenšíme šířku na max 800px
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > MAX_WIDTH) {
+                            height = Math.round((height * MAX_WIDTH) / width);
+                            width = MAX_WIDTH;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        // Zkomprimujeme jako JPEG (kvalita 75 %)
+                        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.75);
+                        document.getElementById('edit-image-base64').value = compressedBase64;
+                        
+                        const preview = document.getElementById('edit-image-preview');
+                        preview.src = compressedBase64;
+                        preview.classList.remove('hidden');
+                    };
+                    img.src = e.target.result;
                 };
-                reader.readAsDataURL(file); // Načtení souboru jako Data URL (Base64)
+                reader.readAsDataURL(file);
             }
         });
 
-        // Uložení upraveného článku
-        function saveArticle(event) {
+        // ==========================================
+        // 3. ULOŽENÍ ČLÁNKU PŘÍMO NA GITHUB PŘES API
+        // ==========================================
+        async function saveArticle(event) {
             event.preventDefault();
             
             const id = parseInt(document.getElementById('edit-id').value);
             const index = articles.findIndex(a => a.id === id);
+            if (index === -1) return;
 
-            if (index !== -1) {
-                articles[index] = {
-                    id: id,
-                    title: document.getElementById('edit-title').value,
-                    category: document.getElementById('edit-category').value,
-                    author: document.getElementById('edit-author').value,
-                    date: articles[index].date,
-                    // Zde se uloží buď nově nahraný Base64 obrázek, nebo původní
-                    image: document.getElementById('edit-image-base64').value || articles[index].image,
-                    summary: document.getElementById('edit-summary').value,
-                    content: document.getElementById('edit-content').value
-                };
+            // Získáme GitHub Token (uloží se v tvém prohlížeči, takže ho zadáváš jen jednou)
+            let token = localStorage.getItem('gh_api_token');
+            if (!token) {
+                token = prompt("Pro uložení na server zadej svůj GitHub Personal Access Token (začíná na ghp_...):");
+                if (!token) return;
+                localStorage.setItem('gh_api_token', token.trim());
+            }
 
-                try {
-                    // Uložení do LocalStorage
-                    localStorage.setItem('breaking_news_articles', JSON.stringify(articles));
-                    renderArticles();
-                    closeModal('edit-modal');
-                } catch (e) {
-                    alert("Chyba při ukládání! Nahraný obrázek je pravděpodobně příliš velký. Zkuste vybrat menší soubor.");
+            // Aktualizujeme článek v poli
+            articles[index] = {
+                id: id,
+                title: document.getElementById('edit-title').value,
+                category: document.getElementById('edit-category').value,
+                author: document.getElementById('edit-author').value,
+                date: articles[index].date,
+                image: document.getElementById('edit-image-base64').value || articles[index].image,
+                summary: document.getElementById('edit-summary').value,
+                content: document.getElementById('edit-content').value
+            };
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerText;
+            submitBtn.innerText = "Ukládám na GitHub...";
+            submitBtn.disabled = true;
+
+            try {
+                const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${ARTICLES_FILE}`;
+
+                // Zjistíme, jestli už clanky.json na GitHubu existuje (potřebujeme jeho SHA)
+                let sha = null;
+                const getRes = await fetch(apiUrl, {
+                    headers: { "Authorization": `Bearer ${token}` }
+                });
+
+                if (getRes.status === 401 || getRes.status === 403) {
+                    localStorage.removeItem('gh_api_token');
+                    alert("Neplatný GitHub Token! Zkus kliknout na Uložit znovu a zadej správný token.");
+                    return;
                 }
+
+                if (getRes.ok) {
+                    const fileData = await getRes.json();
+                    sha = fileData.sha;
+                }
+
+                // Převedeme pole článků na JSON a zakódujeme do Base64 (podpora češtiny)
+                const jsonString = JSON.stringify(articles, null, 2);
+                const encodedContent = btoa(unescape(encodeURIComponent(jsonString)));
+
+                // Odešleme soubor clanky.json na GitHub
+                const bodyData = {
+                    message: `Aktualizace článku #${id}: ${articles[index].title}`,
+                    content: encodedContent
+                };
+                if (sha) bodyData.sha = sha;
+
+                const putRes = await fetch(apiUrl, {
+                    method: "PUT",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(bodyData)
+                });
+
+                if (!putRes.ok) {
+                    throw new Error("GitHub API vrátilo chybu při zápisu. Zkontroluj GITHUB_USERNAME a GITHUB_REPO v kódu.");
+                }
+
+                renderArticles();
+                closeModal('edit-modal');
+                alert("Úspěšně uloženo na GitHub! Do 1 minuty změnu uvidí všichni na internetu.");
+            } catch (e) {
+                console.error(e);
+                alert("Chyba při ukládání: " + e.message);
+            } finally {
+                submitBtn.innerText = originalBtnText;
+                submitBtn.disabled = false;
             }
         }
 
-        // Zavření jakéhokoli modálního okna
+        // Zavření modálního okna
         function closeModal(modalId) {
             document.getElementById(modalId).classList.add('hidden');
             document.body.style.overflow = 'auto';
@@ -537,8 +635,8 @@
             if (event.target === editModal) closeModal('edit-modal');
         }
 
-        // Inicializace při načtení
-        renderArticles();
+        // Spustíme načtení článků při startu stránky
+        loadArticlesFromServer();
     </script>
 </body>
 </html>
