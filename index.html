@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BREAKING NEWS - Školní Zpravodajský Portál</title>
+    <!-- Tailwind CSS pro profesionální a moderní vzhled -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome pro ikonky -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Inter & Merriweather pro novinový styl -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#D32F2F',
+                            reddark: '#9A0007',
+                            navy: '#0F172A',
+                            slate: '#334155',
+                            accent: '#2563EB'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .news-card {
+            transition: all 0.3s ease;
+        }
+        .news-card:hover {
+            transform: translateY(-4px);
+        }
+        /* Custom scrollbar pro detail článku */
+        .modal-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .modal-scroll::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 3px;
+        }
+    </style>
+    
+</head>
+<body class="bg-gray-100 font-sans text-gray-800 flex flex-col min-h-screen">
+
+    <!-- Horní liška s datem a logem -->
+    <header class="bg-brand-navy text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-3 border-b border-gray-700 text-xs sm:text-sm text-gray-300">
+                <div class="flex items-center space-x-3">
+                    <span><i class="far font-bold fa-calendar-alt mr-1 text-brand-red"></i> <span id="current-date">Dnes</span></span>
+                    <span class="hidden md:inline">|</span>
+                    <span class="hidden md:inline"><i class="fas fa-graduation-cap mr-1 text-brand-red"></i> Školní projekt zpravodajství</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="bg-brand-red text-white text-xs px-2 py-0.5 rounded font-bold uppercase tracking-wider animate-pulse">Živě</span>
+                    <span class="text-xs text-gray-400">Aktualizováno</span>
+                </div>
+            </div>
+
+            <!-- Hlavní Logo / Nadpis -->
+            <div class="py-6 text-center md:text-left flex flex-col md:flex-row justify-between items-center">
+                <div>
+                    <h1 class="text-4xl sm:text-6xl font-black font-serif tracking-tight text-white flex items-center justify-center md:justify-start">
+                        BREAKING <span class="text-brand-red ml-3">NEWS</span>
+                    </h1>
+                    <p class="text-gray-400 text-sm sm:text-base mt-1 font-serif italic">Nezávislý studentský zpravodajský portál</p>
+                </div>
+               
+            </div>
+        </div>
+    </header>
+
+    <!-- Úvodní sekce / Představení webu -->
+    <section class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="bg-gradient-to-r from-slate-900 to-brand-navy rounded-2xl p-6 sm:p-8 text-white shadow-lg relative overflow-hidden">
+                <div class="absolute right-0 top-0 bottom-0 opacity-10 pointer-events-none flex items-center pr-10">
+                    <i class="fas fa-newspaper text-9xl"></i>
+                </div>
+                <div class="relative z-10 max-w-3xl">
+                    <span class="bg-brand-red text-white text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wide">Vítejte na portálu</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold mt-3 mb-2 font-serif">Aktuální přehled všech 12 zpravodajských témat</h2>
+                    <p class="text-gray-300 text-sm sm:text-base leading-relaxed">
+                        Tento web slouží jako kompletní přehled nejnovějšího dění na naší škole i ve světě. 
+                        Prohlédněte si jednotlivé karty níže. Můžete si **přečíst jakýkoliv článek** nebo kliknout na tlačítko **"Upravit"** u daného článku a vložit do něj svůj vlastní text!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hlavní mřížka článků (12 karet) -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold text-gray-900 font-serif border-l-4 border-brand-red pl-3">
+                Nejnovější příspěvky (12 článků)
+            </h3>
+            <span class="text-xs sm:text-sm text-gray-500">Kliknutím na kartu zobrazíte detail</span>
+        </div>
+
+        <!-- Mřížka 12 karet -->
+        <div id="articles-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Dynamicky generováno pomocí JS -->
+        </div>
+    </main>
+
+    <!-- Modal 1: DETAIL ČLÁNKU -->
+    <div id="view-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+            <!-- Hlavička modálu -->
+            <div class="p-4 sm:p-6 bg-gray-50 border-b flex justify-between items-start">
+                <div>
+                    <span id="modal-category" class="inline-block text-xs font-bold text-brand-red uppercase tracking-wider mb-1">Kategorie</span>
+                    <h2 id="modal-title" class="text-2xl sm:text-3xl font-bold font-serif text-gray-900 leading-tight">Název článku</h2>
+                    <p class="text-xs text-gray-500 mt-2 flex items-center gap-2">
+                        <span><i class="far fa-clock"></i> <span id="modal-date">Dnes</span></span> | 
+                        <span><i class="far fa-user"></i> Autor: <span id="modal-author">Redakce</span></span>
+                    </p>
+                </div>
+                <button onclick="closeModal('view-modal')" class="text-gray-400 hover:text-gray-700 p-2 rounded-full hover:bg-gray-200 transition">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Tělo modálu (Článek) -->
+            <div class="p-6 overflow-y-auto modal-scroll space-y-4">
+                <img id="modal-image" src="" alt="Obrázek článku" class="w-full h-64 object-cover rounded-xl shadow-sm">
+                <div id="modal-summary" class="text-lg font-medium text-gray-700 italic border-l-4 border-brand-red pl-4 py-1 bg-red-50/50 rounded-r-lg">
+                    Stručný výtah z článku...
+                </div>
+                <div id="modal-content" class="text-gray-800 leading-relaxed font-serif space-y-4 whitespace-pre-line text-base">
+                    Plný text článku...
+                </div>
+            </div>
+
+            <!-- Patka modálu s akčními tlačítky -->
+            <div class="p-4 bg-gray-50 border-t flex justify-between items-center">
+                <button id="modal-edit-btn" onclick="" class="bg-brand-navy hover:bg-slate-800 text-white text-sm font-semibold px-4 py-2 rounded-lg transition flex items-center gap-2">
+                    <i class="fas fa-edit"></i> Upravit tento článek
+                </button>
+                <button onclick="closeModal('view-modal')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm font-semibold px-5 py-2 rounded-lg transition">
+                    Zavřít
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: EDITOR / ÚPRAVA ČLÁNKU -->
+    <div id="edit-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-4 sm:p-6 bg-brand-navy text-white flex justify-between items-center">
+                <h3 class="text-xl font-bold flex items-center gap-2">
+                    <i class="fas fa-pen-to-square text-brand-red"></i> Upravit článek
+                </h3>
+                <button onclick="closeModal('edit-modal')" class="text-gray-300 hover:text-white p-2">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <form id="edit-form" onsubmit="saveArticle(event)" class="p-6 overflow-y-auto modal-scroll space-y-4">
+                <input type="hidden" id="edit-id">
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Název článku</label>
+                    <input type="text" id="edit-title" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-brand-red focus:outline-none">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Kategorie</label>
+                        <input type="text" id="edit-category" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-brand-red focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Autor</label>
+                        <input type="text" id="edit-author" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-brand-red focus:outline-none">
+                    </div>
+                </div>
+
+                <!-- Úprava pro nahrávání z PC -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Obrázek (Nahrát z počítače)</label>
+                    <input type="file" id="edit-image-file" accept="image/*" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-brand-red focus:outline-none bg-white">
+                    <input type="hidden" id="edit-image-base64">
+                    <!-- Náhled obrázku -->
+                    <img id="edit-image-preview" src="" class="mt-3 h-32 w-full object-cover rounded-lg hidden shadow-sm border">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Krátký úvod (zobrazí se na kartě)</label>
+                    <textarea id="edit-summary" rows="2" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-brand-red focus:outline-none"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Celý obsah článku</label>
+                    <textarea id="edit-content" rows="6" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-brand-red focus:outline-none font-serif"></textarea>
+                </div>
+
+                <div class="pt-2 flex justify-end gap-3">
+                    <button type="button" onclick="closeModal('edit-modal')" class="px-4 py-2 border rounded-lg text-gray-600 hover:bg-gray-100 font-semibold text-sm">
+                        Zrušit
+                    </button>
+                    <button type="submit" class="px-6 py-2 bg-brand-red hover:bg-brand-reddark text-white rounded-lg font-semibold text-sm shadow transition">
+                        Uložit změny
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Patka stránky -->
+    <footer class="bg-brand-navy text-gray-400 mt-auto border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <div>
+                <span class="text-white font-serif font-bold text-lg">BREAKING NEWS</span>
+                <p class="text-xs mt-1">Školní novinový projekt • Vytvořeno pro výukové účely</p>
+            </div>
+            <div class="text-xs text-gray-500">
+                &copy; 2026 Všechna práva vyhrazena redakci školních novin.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // HESLO PRO ADMINA (změň si podle sebe)
+        const ADMIN_PASSWORD = "heslo";
+        let isUserAdmin = false; // Proměnná, která si pamatuje, jestli už uživatel zadal heslo
+
+        // Výchozích 12 článků
+        const defaultArticles = [
+            {
+                id: 1,
+                title: "Nové vědecké laboratoře slavnostně otevřeny",
+                category: "Škola",
+                author: "Aneta Nováková",
+                date: "07. 10. 2026",
+                image: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=600&q=80",
+                summary: "Naše škola získala špičkové vybavení pro výuku chemie a fyziky. Podívejte se, co všechno se změnilo.",
+                content: "Dnešním dnem byly v hlavní budově školy oficiálně otevřeny dvě nové moderní vědecké laboratoře. Díky podpoře z evropských fondů získala škola špičkové mikroskopy, digitální měřicí přístroje a plně vybavené pracovní stanice pro pokusy.\n\nŘeditel školy při přestřižení pásky uvedl, že věří v prohloubení zájmu studentů o přírodní vědy. Laboratoře budou přístupné všem ročníkům od příštího týdne."
+            },
+            {
+                id: 2,
+                title: "Školní volejbalový tým postoupil do krajského kola",
+                category: "Sport",
+                author: "Tomáš Král",
+                date: "06. 10. 2026",
+                image: "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=600&q=80",
+                summary: "Po dramatickém finále okresního přeboru oslavují naši reprezentanti zasloužené vítězství.",
+                content: "Včerejší sportovní odpoledne přineslo obrovský úspěch nášemu volejbalovému týmu. Po napínavém třisetovém zápase proti gymnáziu se našim hráčům podařilo strhnout vítězství na svou stranu.\n\nKapitán týmu v rozhovoru ocenil týmového ducha i skvělou diváckou kulisu. Krajské kolo se uskuteční již za dva týdny v krajském městě."
+            },
+            {
+                id: 3,
+                title: "Studentský parlament chystá Podzimní festival",
+                category: "Kultura",
+                author: "Eliška Svobodová",
+                date: "05. 10. 2026",
+                image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80",
+                summary: "Hudba, divadlo i stánky s občerstvením. Přijďte podpořit své spolužáky v pátek na školním dvoře.",
+                content: "Studentská rada zve všechny žáky, učitele i rodiče na tradiční Podzimní festival kulturu a umění. Návštěvníci se mohou těšit na koncert školní kapely, výstavy výtvarných prací i divadelní představení dramatického kroužku.\n\nVstup na akci je zdarma a výtěžek z prodeje domácích koláčů poputuje na dobročinné účely."
+            },
+            {
+                id: 4,
+                title: "Technologický trend: Umělá inteligence ve výuce",
+                category: "Technologie",
+                author: "Martin Dvořák",
+                date: "04. 10. 2026",
+                image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
+                summary: "Jak nástroje generativní AI mění způsob, jakým se studenti připravují na hodiny?",
+                content: "Umělá inteligence už není sci-fi, ale běžný pomocník při studiu. V novém rozhovoru s vyučujícím informatiky probíráme, jak správně a eticky využívat AI k tvorbě zápisků, procvičování cizích jazyků či vyhledávání informací.\n\nŠkola plánuje od příštího měsíce také sérii workshopů o kritickém myšlení na internetu."
+            },
+            {
+                id: 5,
+                title: "Eko-klub vysadil 50 nových stromků v parku",
+                category: "Ekológie",
+                author: "Laura Černá",
+                date: "03. 10. 2026",
+                image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80",
+                summary: "Dobrovolníci z naší školy strávili sobotní dopoledne zvelebováním městské zeleně.",
+                content: "Více než tři desítky studentů z Eko-klubu přiložily ruku k dílu a během sobotního dopoledne vysadily nové sazenice lip a dubů v městském parku. Akce proběhla ve spolupráci s odborem životního prostředí.\n\nDěkujeme všem zúčastněným, kteří pomáhají dělat naše město zelenější a čistší!"
+            },
+            {
+                id: 6,
+                title: "Zahraniční exkurze do Londýna: Přihlašování spuštěno",
+                category: "Cestování",
+                author: "Pavel Procházka",
+                date: "02. 10. 2026",
+                image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=600&q=80",
+                summary: "Pětidenní poznávací zájezd do Spojeného království proběhne na jaře příštího roku.",
+                content: "Kabinet anglického jazyka vyhlašuje přihlašování na jarní poznávací zájezd do Londýna a okolí. Program zahrnuje návštěvu historických památek, muzeí i známých filmových ateliérů.\n\nKapacita je omezená na 45 míst. Formuláře si můžete vyzvednout v kabinetu č. 204."
+            },
+            {
+                id: 7,
+                title: "Rozhovor s vítězkou dějepisné olympiády",
+                category: "Rozhovory",
+                author: "Klára Veselá",
+                date: "01. 10. 2026",
+                image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=600&q=80",
+                summary: "„Historie není jen o datech, ale o příbězích lidi,“ říká studentka 3. ročníku.",
+                content: "Přinášíme exkluzivní rozhovor s naší studentkou, která dosáhla mimořádného úspěchu v celostátním kole dějepisné olympiády. Jak probíhala její příprava, co ji na historii nejvíce baví a jaké má plány do budoucna se dočtete v tomto příspěvku."
+            },
+            {
+                id: 8,
+                title: "Nový jídelníček ve školní jídelně chválí studenti i učitelé",
+                category: "Životní styl",
+                author: "Jan Kučera",
+                date: "30. 09. 2026",
+                image: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=600&q=80",
+                summary: "Školní jídelna zařadila více čerstvého ovoce, zeleniny a vegetariánských alternativ.",
+                content: "Po anketě uspořádané mezi žáky se vedení jídelny rozhodlo modernizovat týdenní menu. V nabídce se nyní pravidelně objevují lehká salátová jídla, bezlepkové možnosti a čerstvé ovoce ke každému obědu.\n\nPrvní reakce studentů jsou velmi pozitivní."
+            },
+            {
+                id: 9,
+                title: "Knižní klub doporučuje: Bestsellery tohoto podzimu",
+                category: "Literatura",
+                author: "Sofie Horáková",
+                date: "29. 09. 2026",
+                image: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=600&q=80",
+                summary: "Hledáte skvělou knihu na sychravé večery? Zde je 5 tipů od členů našeho čtenářského kroužku.",
+                content: "Čtenářský klub připravil výběr nejzajímavějších knih letošního podzimu. Od napínavých detektivek až po inspirativní životopisy. Všechny doporučené tituly si navíc můžete zapůjčit v naší školní knihovně."
+            },
+            {
+                id: 10,
+                title: "Školní časopis získal ocenění za grafický design",
+                category: "Media",
+                author: "David Malý",
+                date: "28. 09. 2026",
+                image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=600&q=80",
+                summary: "Náš redakční tým zabodoval v celostátní soutěži středoškolských časopisů.",
+                content: "Redakce našeho časopisu slaví obrovský úspěch. V konkurenci více než padesáti škol z celé republiky jsme získali 1. místo v kategorii Nejlepší grafické zpracování a vizuální styl.\n\nDěkujeme všem redaktorům a grafikům za jejich tvrdou práci!"
+            },
+            {
+                id: 11,
+                title: "Příprava na maturitu a přijímací zkoušky bez stresu",
+                category: "Rady & Tipy",
+                author: "Školní psycholog",
+                date: "27. 09. 2026",
+                image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80",
+                summary: "Odborné tipy, jak si efektivně rozvrhnout čas a zvládnout učení v klidu a pohodě.",
+                content: "Zkouškové období se blíží a s ním i stres. Školní poradenské pracoviště připravilo přehledný návod, jak plánovat učení, správně odpočívat a jak bojovat s prokrastinací. Nezapomínejte na spánek a pravidelný pohyb!"
+            },
+            {
+                id: 12,
+                title: "Charitativní sbírka pro místní útulek trvá do konce týdne",
+                category: "Komunita",
+                author: "Veronika Šimková",
+                date: "26. 09. 2026",
+                image: "https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=600&q=80",
+                summary: "Můžete přispět krmivem, deakmi nebo hračkami pro pejsky a kočičky bez domova.",
+                content: "Sbírka pro městský zvířecí útulek finišuje. Sběrné místo je u vrátnice školy každé ráno. Děkujeme všem, kteří dosud přispěli granulemi, pamlsky či teplými dekami pro zvířata na zimu."
+            }
+        ];
+
+        // Načtení článků z localStorage nebo nastavení výchozích
+        let articles = JSON.parse(localStorage.getItem('breaking_news_articles')) || defaultArticles;
+
+        // Nastavení dnešního data
+        document.getElementById('current-date').innerText = new Date().toLocaleDateString('cs-CZ', {
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        });
+
+        // Kontrola hesla před úpravou
+        function checkAuthAndEdit(id) {
+            if (isUserAdmin) {
+                openEditModal(id);
+                return;
+            }
+
+            const password = prompt("Zadejte přístupové heslo pro úpravu článků:");
+            if (password === ADMIN_PASSWORD) {
+                isUserAdmin = true;
+                openEditModal(id);
+            } else if (password !== null) {
+                alert("Nesprávné heslo! Přístup odepřen.");
+            }
+        }
+
+        // Vykreslení karet na stránku
+        function renderArticles() {
+            const grid = document.getElementById('articles-grid');
+            grid.innerHTML = '';
+
+            articles.forEach(article => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md border border-gray-200 flex flex-col news-card transition';
+                
+                card.innerHTML = `
+                    <div class="relative h-48 overflow-hidden bg-gray-100">
+                        <img src="${article.image}" alt="${article.title}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/0f172a/ffffff?text=Zpravodajstvi'">
+                        <span class="absolute top-3 left-3 bg-brand-red text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md shadow">
+                            ${article.category}
+                        </span>
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-between">
+                        <div>
+                            <div class="text-xs text-gray-400 mb-2 flex justify-between items-center">
+                                <span><i class="far fa-clock mr-1"></i> ${article.date}</span>
+                                <span><i class="far fa-user mr-1"></i> ${article.author}</span>
+                            </div>
+                            <h4 class="font-bold text-gray-900 font-serif text-lg leading-snug mb-2 line-clamp-2 hover:text-brand-red cursor-pointer" onclick="openViewModal(${article.id})">
+                                ${article.title}
+                            </h4>
+                            <p class="text-gray-600 text-sm line-clamp-3 mb-4 leading-relaxed">
+                                ${article.summary}
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-gray-100 flex items-center justify-between mt-auto">
+                            <button onclick="openViewModal(${article.id})" class="text-brand-red hover:text-brand-reddark text-xs font-bold uppercase tracking-wider flex items-center gap-1">
+                                Číst dále <i class="fas fa-arrow-right text-[10px]"></i>
+                            </button>
+                            <!-- Změněno volání na checkAuthAndEdit -->
+                            <button onclick="checkAuthAndEdit(${article.id})" class="text-gray-400 hover:text-brand-navy text-xs font-semibold px-2 py-1 bg-gray-50 hover:bg-gray-100 rounded border border-gray-200 transition" title="Upravit článek">
+                                <i class="fas fa-edit"></i> Upravit
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Zobrazení detailu článku
+        function openViewModal(id) {
+            const article = articles.find(a => a.id === id);
+            if (!article) return;
+
+            document.getElementById('modal-title').innerText = article.title;
+            document.getElementById('modal-category').innerText = article.category;
+            document.getElementById('modal-date').innerText = article.date;
+            document.getElementById('modal-author').innerText = article.author;
+            document.getElementById('modal-image').src = article.image;
+            document.getElementById('modal-summary').innerText = article.summary;
+            document.getElementById('modal-content').innerText = article.content;
+
+            // Změněno na volání s heslem
+            document.getElementById('modal-edit-btn').onclick = function() {
+                closeModal('view-modal');
+                checkAuthAndEdit(id);
+            };
+
+            document.getElementById('view-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        // Otevření editoru článku
+        function openEditModal(id) {
+            const article = articles.find(a => a.id === id);
+            if (!article) return;
+
+            document.getElementById('edit-id').value = article.id;
+            document.getElementById('edit-title').value = article.title;
+            document.getElementById('edit-category').value = article.category;
+            document.getElementById('edit-author').value = article.author;
+            document.getElementById('edit-summary').value = article.summary;
+            document.getElementById('edit-content').value = article.content;
+
+            // Nastavení aktuálního obrázku
+            document.getElementById('edit-image-file').value = ''; // vyresetování file inputu
+            document.getElementById('edit-image-base64').value = article.image;
+            
+            const preview = document.getElementById('edit-image-preview');
+            preview.src = article.image;
+            preview.classList.remove('hidden');
+
+            document.getElementById('edit-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Zpracování nahrání obrázku - Převede obrázek na Base64
+        document.getElementById('edit-image-file').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64String = e.target.result;
+                    // Uložíme si vygenerovaný kód do skrytého pole
+                    document.getElementById('edit-image-base64').value = base64String;
+                    // Zobrazíme náhled
+                    const preview = document.getElementById('edit-image-preview');
+                    preview.src = base64String;
+                    preview.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file); // Načtení souboru jako Data URL (Base64)
+            }
+        });
+
+        // Uložení upraveného článku
+        function saveArticle(event) {
+            event.preventDefault();
+            
+            const id = parseInt(document.getElementById('edit-id').value);
+            const index = articles.findIndex(a => a.id === id);
+
+            if (index !== -1) {
+                articles[index] = {
+                    id: id,
+                    title: document.getElementById('edit-title').value,
+                    category: document.getElementById('edit-category').value,
+                    author: document.getElementById('edit-author').value,
+                    date: articles[index].date,
+                    // Zde se uloží buď nově nahraný Base64 obrázek, nebo původní
+                    image: document.getElementById('edit-image-base64').value || articles[index].image,
+                    summary: document.getElementById('edit-summary').value,
+                    content: document.getElementById('edit-content').value
+                };
+
+                try {
+                    // Uložení do LocalStorage
+                    localStorage.setItem('breaking_news_articles', JSON.stringify(articles));
+                    renderArticles();
+                    closeModal('edit-modal');
+                } catch (e) {
+                    alert("Chyba při ukládání! Nahraný obrázek je pravděpodobně příliš velký. Zkuste vybrat menší soubor.");
+                }
+            }
+        }
+
+        // Zavření jakéhokoli modálního okna
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Zavření kliknutím mimo okno
+        window.onclick = function(event) {
+            const viewModal = document.getElementById('view-modal');
+            const editModal = document.getElementById('edit-modal');
+            if (event.target === viewModal) closeModal('view-modal');
+            if (event.target === editModal) closeModal('edit-modal');
+        }
+
+        // Inicializace při načtení
+        renderArticles();
+    </script>
+</body>
+</html>
