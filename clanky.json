@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "title": "Nové vědecké laboratoře slavnostně otevřeny",
+    "category": "Škola",
+    "author": "Adela",
+    "date": "07. 10. 2026",
+    "image": "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=600&q=80",
+    "summary": "Naše škola získala špičkové vybavení pro výuku chemie a fyziky. Podívejte se, co všechno se změnilo.",
+    "content": "Dnešním dnem byly v hlavní budově školy oficiálně otevřeny dvě nové moderní vědecké laboratoře. Díky podpoře z evropských fondů získala škola špičkové mikroskopy, \n digitální měřicí přístroje a plně vybavené pracovní stanice pro pokusy. Ředitel školy při přestřižení pásky uvedl, že věří v prohloubení zájmu studentů o přírodní vědy. Laboratoře budou přístupné všem ročníkům od příštího týdne."
+  },
+  {
+    "id": 2,
+    "title": "Školní volejbalový tým postoupil do krajského kola",
+    "category": "Sport",
+    "author": "Tomáš Král",
+    "date": "06. 10. 2026",
+    "image": "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?auto=format&fit=crop&w=600&q=80",
+    "summary": "Po dramatickém finále okresního přeboru oslavují naši reprezentanti zasloužené vítězství.",
+    "content": "Včerejší sportovní odpoledne přineslo obrovský úspěch nášemu volejbalovému týmu. Po napínavém třisetovém zápase proti gymnáziu se našim hráčům podařilo strhnout vítězství na svou stranu.\n\nKapitán týmu v rozhovoru ocenil týmového ducha i skvělou diváckou kulisu. Krajské kolo se uskuteční již za dva týdny v krajském městě."
+  },
+  {
+    "id": 3,
+    "title": "Studentský parlament chystá Podzimní festival",
+    "category": "Kultura",
+    "author": "Eliška Svobodová",
+    "date": "05. 10. 2026",
+    "image": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80",
+    "summary": "Hudba, divadlo i stánky s občerstvením. Přijďte podpořit své spolužáky v pátek na školním dvoře.",
+    "content": "Studentská rada zve všechny žáky, učitele i rodiče na tradiční Podzimní festival kulturu a umění. Návštěvníci se mohou těšit na koncert školní kapely, výstavy výtvarných prací i divadelní představení dramatického kroužku.\n\nVstup na akci je zdarma a výtěžek z prodeje domácích koláčů poputuje na dobročinné účely."
+  },
+  {
+    "id": 4,
+    "title": "Technologický trend: Umělá inteligence ve výuce",
+    "category": "Technologie",
+    "author": "Martin Dvořák",
+    "date": "04. 10. 2026",
+    "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
+    "summary": "Jak nástroje generativní AI mění způsob, jakým se studenti připravují na hodiny?",
+    "content": "Umělá inteligence už není sci-fi, ale běžný pomocník při studiu. V novém rozhovoru s vyučujícím informatiky probíráme, jak správně a eticky využívat AI k tvorbě zápisků, procvičování cizích jazyků či vyhledávání informací.\n\nŠkola plánuje od příštího měsíce také sérii workshopů o kritickém myšlení na internetu."
+  },
+  {
+    "id": 5,
+    "title": "Eko-klub vysadil 50 nových stromků v parku",
+    "category": "Ekológie",
+    "author": "Laura Černá",
+    "date": "03. 10. 2026",
+    "image": "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80",
+    "summary": "Dobrovolníci z naší školy strávili sobotní dopoledne zvelebováním městské zeleně.",
+    "content": "Více než tři desítky studentů z Eko-klubu přiložily ruku k dílu a během sobotního dopoledne vysadily nové sazenice lip a dubů v městském parku. Akce proběhla ve spolupráci s odborem životního prostředí.\n\nDěkujeme všem zúčastněným, kteří pomáhají dělat naše město zelenější a čistší!"
+  },
+  {
+    "id": 6,
+    "title": "Zahraniční exkurze do Londýna: Přihlašování spuštěno",
+    "category": "Cestování",
+    "author": "Pavel Procházka",
+    "date": "02. 10. 2026",
+    "image": "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=600&q=80",
+    "summary": "Pětidenní poznávací zájezd do Spojeného království proběhne na jaře příštího roku.",
+    "content": "Kabinet anglického jazyka vyhlašuje přihlašování na jarní poznávací zájezd do Londýna a okolí. Program zahrnuje návštěvu historických památek, muzeí i známých filmových ateliérů.\n\nKapacita je omezená na 45 míst. Formuláře si můžete vyzvednout v kabinetu č. 204."
+  },
+  {
+    "id": 7,
+    "title": "Rozhovor s vítězkou dějepisné olympiády",
+    "category": "Rozhovory",
+    "author": "Klára Veselá",
+    "date": "01. 10. 2026",
+    "image": "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=600&q=80",
+    "summary": "„Historie není jen o datech, ale o příbězích lidi,“ říká studentka 3. ročníku.",
+    "content": "Přinášíme exkluzivní rozhovor s naší studentkou, která dosáhla mimořádného úspěchu v celostátním kole dějepisné olympiády. Jak probíhala její příprava, co ji na historii nejvíce baví a jaké má plány do budoucna se dočtete v tomto příspěvku."
+  },
+  {
+    "id": 8,
+    "title": "Nový jídelníček ve školní jídelně chválí studenti i učitelé",
+    "category": "Životní styl",
+    "author": "Jan Kučera",
+    "date": "30. 09. 2026",
+    "image": "https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=600&q=80",
+    "summary": "Školní jídelna zařadila více čerstvého ovoce, zeleniny a vegetariánských alternativ.",
+    "content": "Po anketě uspořádané mezi žáky se vedení jídelny rozhodlo modernizovat týdenní menu. V nabídce se nyní pravidelně objevují lehká salátová jídla, bezlepkové možnosti a čerstvé ovoce ke každému obědu.\n\nPrvní reakce studentů jsou velmi pozitivní."
+  },
+  {
+    "id": 9,
+    "title": "Knižní klub doporučuje: Bestsellery tohoto podzimu",
+    "category": "Literatura",
+    "author": "Sofie Horáková",
+    "date": "29. 09. 2026",
+    "image": "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=600&q=80",
+    "summary": "Hledáte skvělou knihu na sychravé večery? Zde je 5 tipů od členů našeho čtenářského kroužku.",
+    "content": "Čtenářský klub připravil výběr nejzajímavějších knih letošního podzimu. Od napínavých detektivek až po inspirativní životopisy. Všechny doporučené tituly si navíc můžete zapůjčit v naší školní knihovně."
+  },
+  {
+    "id": 10,
+    "title": "Školní časopis získal ocenění za grafický design",
+    "category": "Media",
+    "author": "David Malý",
+    "date": "28. 09. 2026",
+    "image": "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=600&q=80",
+    "summary": "Náš redakční tým zabodoval v celostátní soutěži středoškolských časopisů.",
+    "content": "Redakce našeho časopisu slaví obrovský úspěch. V konkurenci více než padesáti škol z celé republiky jsme získali 1. místo v kategorii Nejlepší grafické zpracování a vizuální styl.\n\nDěkujeme všem redaktorům a grafikům za jejich tvrdou práci!"
+  },
+  {
+    "id": 11,
+    "title": "Příprava na maturitu a přijímací zkoušky bez stresu",
+    "category": "Rady & Tipy",
+    "author": "Školní psycholog",
+    "date": "27. 09. 2026",
+    "image": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80",
+    "summary": "Odborné tipy, jak si efektivně rozvrhnout čas a zvládnout učení v klidu a pohodě.",
+    "content": "Zkouškové období se blíží a s ním i stres. Školní poradenské pracoviště připravilo přehledný návod, jak plánovat učení, správně odpočívat a jak bojovat s prokrastinací. Nezapomínejte na spánek a pravidelný pohyb!"
+  },
+  {
+    "id": 12,
+    "title": "Charitativní sbírka pro místní útulek trvá do konce týdne",
+    "category": "Komunita",
+    "author": "Veronika Šimková",
+    "date": "26. 09. 2026",
+    "image": "https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=600&q=80",
+    "summary": "Můžete přispět krmivem, dekami nebo hračkami pro pejsky a kočičky bez domova.",
+    "content": "Sbírka pro městský zvířecí útulek finišuje. Sběrné místo je u vrátnice školy každé ráno. Děkujeme všem, kteří dosud přispěli granulemi, pamlsky či teplými dekami pro zvířata na zimu."
+  }
+]
