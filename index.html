@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BREAKING NEWS - Školní Zpravodajský Portál</title>
+    <title>BREAKING NEWS</title>
     <!-- Tailwind CSS pro profesionální a moderní vzhled -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome pro ikonky -->
@@ -57,14 +57,11 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-3 border-b border-gray-700 text-xs sm:text-sm text-gray-300">
                 <div class="flex items-center space-x-3">
-                    <span><i class="far font-bold fa-calendar-alt mr-1 text-brand-red"></i> <span id="current-date">Dnes</span></span>
+                    <span><i class="far font-bold fa-calendar-alt mr-1 text-brand-red"></i> <span id="current-date">Today</span></span>
                     <span class="hidden md:inline">|</span>
-                    <span class="hidden md:inline"><i class="fas fa-graduation-cap mr-1 text-brand-red"></i> Školní projekt zpravodajství</span>
+                    <span class="hidden md:inline"><i class="fas fa-graduation-cap mr-1 text-brand-red"></i> Project week</span>
                 </div>
-                <div class="flex items-center space-x-2">
-                    <span class="bg-brand-red text-white text-xs px-2 py-0.5 rounded font-bold uppercase tracking-wider animate-pulse">Živě</span>
-                    <span class="text-xs text-gray-400">Aktualizováno</span>
-                </div>
+            
             </div>
 
             <!-- Hlavní Logo / Nadpis -->
@@ -73,7 +70,7 @@
                     <h1 class="text-4xl sm:text-6xl font-black font-serif tracking-tight text-white flex items-center justify-center md:justify-start">
                         BREAKING <span class="text-brand-red ml-3">NEWS</span>
                     </h1>
-                    <p class="text-gray-400 text-sm sm:text-base mt-1 font-serif italic">Nezávislý studentský zpravodajský portál</p>
+                    <p class="text-gray-400 text-sm sm:text-base mt-1 font-serif italic">The project of Zuzana Konrádová and Adéla Zárubová</p>
                 </div>
                
             </div>
@@ -88,11 +85,10 @@
                     <i class="fas fa-newspaper text-9xl"></i>
                 </div>
                 <div class="relative z-10 max-w-3xl">
-                    <span class="bg-brand-red text-white text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wide">Vítejte na portálu</span>
-                    <h2 class="text-2xl sm:text-3xl font-bold mt-3 mb-2 font-serif">Aktuální přehled všech 12 zpravodajských témat</h2>
+                    <span class="bg-brand-red text-white text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wide">Welcome</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold mt-3 mb-2 font-serif">Introduction</h2>
                     <p class="text-gray-300 text-sm sm:text-base leading-relaxed">
-                        Tento web slouží jako kompletní přehled nejnovějšího dění na naší škole i ve světě. 
-                        Prohlédněte si jednotlivé karty níže. Můžete si **přečíst jakýkoliv článek** nebo kliknout na tlačítko **"Upravit"** u daného článku a vložit do něj svůj vlastní text!
+                        This is our take on the project Breaking News led by Miss Kranátová, who presented the topic and goal of this week. Our intention was to write informational articles about the experiences of other students during this year's project Week.
                     </p>
                 </div>
             </div>
@@ -103,9 +99,9 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow">
         <div class="flex justify-between items-center mb-6">
             <h3 class="text-xl font-bold text-gray-900 font-serif border-l-4 border-brand-red pl-3">
-                Nejnovější příspěvky (12 článků)
+                Articless
             </h3>
-            <span class="text-xs sm:text-sm text-gray-500">Kliknutím na kartu zobrazíte detail</span>
+            <span class="text-xs sm:text-sm text-gray-500">Click to see the details</span>
         </div>
 
         <!-- Mřížka 12 karet -->
@@ -120,11 +116,11 @@
             <!-- Hlavička modálu -->
             <div class="p-4 sm:p-6 bg-gray-50 border-b flex justify-between items-start">
                 <div>
-                    <span id="modal-category" class="inline-block text-xs font-bold text-brand-red uppercase tracking-wider mb-1">Kategorie</span>
-                    <h2 id="modal-title" class="text-2xl sm:text-3xl font-bold font-serif text-gray-900 leading-tight">Název článku</h2>
+                    <span id="modal-category" class="inline-block text-xs font-bold text-brand-red uppercase tracking-wider mb-1">Place</span>
+                    <h2 id="modal-title" class="text-2xl sm:text-3xl font-bold font-serif text-gray-900 leading-tight">Name of the article</h2>
                     <p class="text-xs text-gray-500 mt-2 flex items-center gap-2">
-                        <span><i class="far fa-clock"></i> <span id="modal-date">Dnes</span></span> | 
-                        <span><i class="far fa-user"></i> Autor: <span id="modal-author">Redakce</span></span>
+                        <span><i class="far fa-clock"></i> <span id="modal-date">Today</span></span> | 
+                        <span><i class="far fa-user"></i> Author: <span id="modal-author">Redakce</span></span>
                     </p>
                 </div>
                 <button onclick="closeModal('view-modal')" class="text-gray-400 hover:text-gray-700 p-2 rounded-full hover:bg-gray-200 transition">
@@ -175,7 +171,7 @@
                     <input type="text" id="edit-title" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-brand-red focus:outline-none">
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
                         <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Kategorie</label>
                         <input type="text" id="edit-category" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-brand-red focus:outline-none">
@@ -183,6 +179,10 @@
                     <div>
                         <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Autor</label>
                         <input type="text" id="edit-author" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-brand-red focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Datum</label>
+                        <input type="date" id="edit-date" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-brand-red focus:outline-none">
                     </div>
                 </div>
 
@@ -222,10 +222,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
             <div>
                 <span class="text-white font-serif font-bold text-lg">BREAKING NEWS</span>
-                <p class="text-xs mt-1">Školní novinový projekt • Vytvořeno pro výukové účely</p>
+                <p class="text-xs mt-1">Project week • Created for educational purposes</p>
             </div>
             <div class="text-xs text-gray-500">
-                &copy; 2026 Všechna práva vyhrazena redakci školních novin.
+                &copy; 2026 All rights reserved by us.
             </div>
         </div>
     </footer>
@@ -369,7 +369,7 @@
         let articles = [...defaultArticles];
 
         // Nastavení dnešního data v hlavičce
-        document.getElementById('current-date').innerText = new Date().toLocaleDateString('cs-CZ', {
+        document.getElementById('current-date').innerText = new Date().toLocaleDateString('en-GB', {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
         });
 
@@ -479,6 +479,7 @@
             document.getElementById('edit-title').value = article.title;
             document.getElementById('edit-category').value = article.category;
             document.getElementById('edit-author').value = article.author;
+            document.getElementById('edit-date').value = article.date;
             document.getElementById('edit-summary').value = article.summary;
             document.getElementById('edit-content').value = article.content;
 
@@ -554,7 +555,7 @@
                 title: document.getElementById('edit-title').value,
                 category: document.getElementById('edit-category').value,
                 author: document.getElementById('edit-author').value,
-                date: articles[index].date,
+                date: document.getElementById('edit-date').value,
                 image: document.getElementById('edit-image-base64').value || articles[index].image,
                 summary: document.getElementById('edit-summary').value,
                 content: document.getElementById('edit-content').value
