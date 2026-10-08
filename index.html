@@ -239,7 +239,7 @@
         const ARTICLES_FILE = "clanky.json";              // Název souboru, kam se budou články ukládat
 
         // HESLO PRO ADMINA (pro otevření editoru)
-        const ADMIN_PASSWORD = "heslo";
+        const ADMIN_PASSWORD = "KonZar26";
         let isUserAdmin = false;
 
         // Výchozích 12 článků (použijí se, dokud na GitHubu ještě není clanky.json)
@@ -438,9 +438,7 @@
                             <button onclick="openViewModal(${article.id})" class="text-brand-red hover:text-brand-reddark text-xs font-bold uppercase tracking-wider flex items-center gap-1">
                                 Read more <i class="fas fa-arrow-right text-[10px]"></i>
                             </button>
-                            <button onclick="checkAuthAndEdit(${article.id})" class="text-gray-400 hover:text-brand-navy text-xs font-semibold px-2 py-1 bg-gray-50 hover:bg-gray-100 rounded border border-gray-200 transition" title="Upravit článek">
-                                <i class="fas fa-edit"></i> Upravit
-                            </button>
+                            
                         </div>
                     </div>
                 `;
